@@ -1,22 +1,29 @@
 package rpw;
 
+import input.Inputhandler;
 import render.Renderhandler;
+import ui.UIhandler;
+import world.Worldhandler;
+
+import cmd.Cmdhandler;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static com.badlogic.gdx.Gdx.*;
 
 public class RPWorld implements ApplicationListener {
+	
+	public static State state = State.MENU;
+	public static Inputhandler IH = new Inputhandler();
+	public static boolean sharedPaused = false;
+	public static boolean personalPaused = false;
+	public static boolean worldPaused = false;
 	
 	@Override
 	public void create() {
 		Renderhandler.setup();
+		UIhandler.load();
+		input.setInputProcessor(IH);
+		Worldhandler.setup();
 	}
 
 	@Override
@@ -26,6 +33,9 @@ public class RPWorld implements ApplicationListener {
 
 	@Override
 	public void render() {
+		UIhandler.update();
+		Cmdhandler.update();
+		Worldhandler.update();
 		Renderhandler.render();
 	}
 
@@ -39,5 +49,14 @@ public class RPWorld implements ApplicationListener {
 
 	@Override
 	public void resume() {
+	}
+	
+	public static void exit(){
+		System.exit(0);
+	}
+
+	public static void changeState(String id) {
+		state = State.parseState(id);
+		UIhandler.resetMenu();
 	}
 }

@@ -45,7 +45,20 @@ public class Inputhandler implements InputProcessor{
 				}
 				break;
 			case WORLD:
-				if(!RPWorld.worldPaused){
+				switch(keycode){
+					case ESCAPE:
+						if(RPWorld.worldPaused){
+							RPWorld.worldPaused = false;
+						}else{
+							RPWorld.worldPaused = true;
+						}
+						break;
+				}
+				if(RPWorld.worldPaused){
+					switch(keycode){
+						
+					}
+				}else{
 					switch(keycode){
 						case PAGE_UP:
 							Renderhandler.zoomIn = true;
@@ -126,6 +139,25 @@ public class Inputhandler implements InputProcessor{
 					}
 				}else{
 					
+				}
+				break;
+			case WORLD:
+				if(RPWorld.worldPaused){
+					switch(button){
+						case Input.Buttons.LEFT:
+							UIhandler.activate();
+							break;
+					}
+				}else{
+					switch(button){
+						case Input.Buttons.LEFT:
+							if(Worldhandler.getWorld().levelChosen && Worldhandler.getWorld().hasHover()){
+								RPWorld.changeState(SHAREDMAP);
+							}else if(Worldhandler.getWorld().hasHover()){
+								Worldhandler.setActiveLevel();
+							}
+							break;
+					}
 				}
 				break;
 		}

@@ -75,23 +75,23 @@ public abstract class Renderer {
     
     public void drawMenu(Menu m){
     	if(m.DRAWTITLE){
-    		drawString(m.TITLE, -250, 300, UIAssethandler.titleLabelStyle, 1.0f);
-        	drawString("-------------", -250, 300 - UIAssethandler.titleLabelStyle.font.getCapHeight() - 2, UIAssethandler.titleLabelStyle, 1.0f);
+    		drawString(m.TITLE, -250, 300, Assethandler.titleLabelStyle, 1.0f);
+        	drawString("-------------", -250, 300 - Assethandler.titleLabelStyle.font.getCapHeight() - 2, Assethandler.titleLabelStyle, 1.0f);
     	}
     	for(int i = 0; i < m.buttons.size(); i++){
     		Button b = m.buttons.get(i);
     		NinePatch img;
     		if(b.HOVER){
-    			img = UIAssethandler.buttonDownImg;
+    			img = Assethandler.buttonDownImg;
     		}else{
-    			img = UIAssethandler.buttonUpImg;
+    			img = Assethandler.buttonUpImg;
     		}
     		drawNinePatch(img, b.BOX.x, b.BOX.y, b.BOX.width, b.BOX.height);
     		String title = b.TITLE;
     		if(title.isEmpty()){
     			title = "[UNTITLED]";
     		}
-    		drawString(title, b.BOX.x + b.TX, b.getTitleY(), UIAssethandler.buttonLabelStyle, 1.0f);
+    		drawString(title, b.BOX.x + b.TX, b.getTitleY(), Assethandler.buttonLabelStyle, 1.0f);
     	}
     }
     
@@ -100,16 +100,22 @@ public abstract class Renderer {
 	    	for(int x = 0; x < w.LEVELS.length; x++){
 	    		for(int y = 0; y < w.LEVELS[x].length; y++){
 	    			Rectangle b = w.getLevelBox(x, y);
-	    			drawNinePatch(UIAssethandler.mapImg, b.x, b.y, b.width, b.height);
+	    			if(w.LEVELS[x][y].HOVER){
+		    			drawNinePatch(Assethandler.mapMarkerImg, b.x, b.y, b.width, b.height);
+	    			}else if(w.activeLevelX == x && w.activeLevelY == y){
+		    			drawNinePatch(Assethandler.mapMarkerImg, b.x, b.y, b.width, b.height);
+	    			}else{
+		    			drawNinePatch(Assethandler.mapImg, b.x, b.y, b.width, b.height);
+	    			}
 	    		}
 	    	}
     	}catch(Exception ex){
-    		drawString("ERROR", 0, 0, UIAssethandler.debugLabelStyle, 0.5f);
+    		drawString("ERROR", 0, 0, Assethandler.debugLabelStyle, 0.5f);
     	}
     }
     
     public void drawMessages(ArrayList<Message> m, float x, float y, boolean up){
-    	LabelStyle style = UIAssethandler.messageLabelStyle;
+    	LabelStyle style = Assethandler.messageLabelStyle;
     	for(int i = 0; i < m.size(); i++){
     		if(up){
     			drawString(m.get(i).TEXT, x, y + (i * (style.font.getCapHeight() + 3)), style, 0.5f);

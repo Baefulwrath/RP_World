@@ -59,4 +59,9 @@ public class RPWorld implements ApplicationListener {
 		state = State.parseState(id);
 		UIhandler.resetMenu();
 	}
+	
+	public static void changeState(State s) {
+		state = s;
+		UIhandler.resetMenu();
+	}
 }

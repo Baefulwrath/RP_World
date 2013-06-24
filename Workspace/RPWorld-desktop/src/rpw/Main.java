@@ -15,8 +15,9 @@ public class Main {
 		cfg.useGL20 = false;
 		cfg.width = 1280;
 		cfg.height = 720;
-		int fullscreen = JOptionPane.showConfirmDialog(null, "Fullscreen?", "Fullscreen", JOptionPane.YES_NO_OPTION);
-		if(fullscreen == JOptionPane.YES_OPTION){
+		//int fullscreen = JOptionPane.showConfirmDialog(null, "Fullscreen?", "Fullscreen", JOptionPane.YES_NO_OPTION);
+		//if(fullscreen == JOptionPane.YES_OPTION){
+		if(false){
 			Toolkit toolkit =  Toolkit.getDefaultToolkit();
 			Dimension dim = toolkit.getScreenSize();
 			cfg.width = dim.width;

@@ -2,7 +2,7 @@ package ui;
 
 import java.awt.Rectangle;
 
-import render.UIAssethandler;
+import render.Assethandler;
 
 public class Button {
 	public Rectangle BOX = new Rectangle();
@@ -28,7 +28,7 @@ public class Button {
 	
 	public int getTitleY(){
 		int y = BOX.y;
-		y += (BOX.height / 2) + (UIAssethandler.buttonLabelStyle.font.getCapHeight() / 2);
+		y += (BOX.height / 2) + (Assethandler.buttonLabelStyle.font.getCapHeight() / 2);
 		return y;
 	}
 	public void update(Rectangle controller){

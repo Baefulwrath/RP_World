@@ -82,10 +82,18 @@ public class Worldhandler {
 	public static World getWorld(){
 		return worlds.get(activeWorld);
 	}
+	
+	public static Level getLevel(){
+		return getWorld().getLevel();
+	}
 
 	public static void setActiveWorld(String id) {
 		activeWorld = id;
 		worldSet = true;
+	}
+	
+	public static void setActiveLevel(){
+		getWorld().setActiveLevel();
 	}
 
 }

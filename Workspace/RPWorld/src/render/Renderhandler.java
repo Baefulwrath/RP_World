@@ -77,6 +77,7 @@ public class Renderhandler {
 		camera.zoom = w;
 		prepRender();
 		getActiveRenderer().drawImage(background, 0, 0, w, h, 0, true, Color.WHITE, 1.0f, true);
+		getActiveRenderer().drawString(RPWorld.state.toString(), getScreenX(), getScreenY() + (Assethandler.messageLabelStyle.font.getCapHeight()), Assethandler.messageLabelStyle, 0.5f);
 		endRender();
 	}
 	
@@ -127,7 +128,7 @@ public class Renderhandler {
 	
 	public static void dispose(){
 		batch.dispose();
-		UIAssethandler.dispose();
+		Assethandler.dispose();
 	}
     
     public static float getZoomScale(){
@@ -167,7 +168,7 @@ public class Renderhandler {
 	    	for(Map.Entry<State, Renderer> entry : renderers.entrySet()){
 	    		renderers.get(entry.getKey()).loadSpecificResources();
 	    	}
-	    	UIAssethandler.load();
+	    	Assethandler.load();
 	    	background = new Sprite(new Texture(Gdx.files.internal("data/images/background.png")));
     	}catch(Exception ex){
     		ex.printStackTrace(System.out);

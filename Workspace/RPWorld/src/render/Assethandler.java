@@ -1,14 +1,17 @@
 package render;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class UIAssethandler {
+public class Assethandler {
     private static BitmapFont com64;
     private static BitmapFont com32;
     private static BitmapFont com16;
@@ -27,6 +30,9 @@ public class UIAssethandler {
 	public static NinePatch buttonUpImg;
 	public static NinePatch buttonDownImg;
 	public static NinePatch mapImg;
+	public static NinePatch mapMarkerImg;
+	
+	public static HashMap<String, Texture> tilesets = new HashMap<String, Texture>();
     
     public static void load(){
     	try{
@@ -38,16 +44,17 @@ public class UIAssethandler {
             com16_BI = new BitmapFont(Gdx.files.internal("data/fonts/com16_BI.fnt"), Gdx.files.internal("data/fonts/com16_BI.png"), false, false);
             com10_BI = new BitmapFont(Gdx.files.internal("data/fonts/com10_BI.fnt"), Gdx.files.internal("data/fonts/com10_BI.png"), false, false);
 
-            messageLabelStyle = new LabelStyle(UIAssethandler.com10, Color.CYAN);
-            logoLabelStyle = new LabelStyle(UIAssethandler.com64, Color.WHITE);
-            debugLabelStyle = new LabelStyle(UIAssethandler.com10, Color.RED);
-            titleLabelStyle = new LabelStyle(UIAssethandler.com32_BI, Color.WHITE);
-            basicLabelStyle = new LabelStyle(UIAssethandler.com10, Color.WHITE);
-            buttonLabelStyle = new LabelStyle(UIAssethandler.com16, Color.WHITE);
+            messageLabelStyle = new LabelStyle(Assethandler.com10, Color.CYAN);
+            logoLabelStyle = new LabelStyle(Assethandler.com64, Color.WHITE);
+            debugLabelStyle = new LabelStyle(Assethandler.com10, Color.RED);
+            titleLabelStyle = new LabelStyle(Assethandler.com32_BI, Color.WHITE);
+            basicLabelStyle = new LabelStyle(Assethandler.com10, Color.WHITE);
+            buttonLabelStyle = new LabelStyle(Assethandler.com16, Color.WHITE);
 
             buttonUpImg = parsePatch(Gdx.files.internal("data/images/buttonUpPatch.txt").readString(), new Texture(Gdx.files.internal("data/images/buttonUp.png")));
             buttonDownImg = parsePatch(Gdx.files.internal("data/images/buttonDownPatch.txt").readString(), new Texture(Gdx.files.internal("data/images/buttonDown.png")));
             mapImg = parsePatch(Gdx.files.internal("data/images/mapPatch.txt").readString(), new Texture(Gdx.files.internal("data/images/map.png")));
+            mapMarkerImg = parsePatch(Gdx.files.internal("data/images/mapMarkerPatch.txt").readString(), new Texture(Gdx.files.internal("data/images/mapMarker.png")));
     	}catch(Exception ex){
     		ex.printStackTrace(System.out);
     	}
@@ -65,6 +72,12 @@ public class UIAssethandler {
     	int bottom = Integer.parseInt(info.substring(info.indexOf(",") + 1));
     	NP = new NinePatch(tex, left, right, top, bottom);
     	return NP;
+    }
+    
+    public static Sprite getTileSprite(String tileset, int type){
+    	int hi = tilesets.get(tileset).getHeight();
+    	Sprite s = new Sprite(new TextureRegion(tilesets.get(tileset), hi * type, 0, hi, hi));
+    	return s;
     }
 
 }

@@ -1,9 +1,16 @@
 package world;
 
+import input.Inputhandler;
+
 import java.awt.Rectangle;
+
+import rpw.RPWorld;
+import rpw.State;
 
 public class World {
 	public Level[][] LEVELS = new Level[0][0];
+	public int activeLevelX = 0;
+	public int activeLevelY = 0;
 	public String TITLE = "";
 	public static final int mapSize = 50;
 	public static final int mapBorder = 4;
@@ -14,6 +21,7 @@ public class World {
 	public boolean up = false;
 	public boolean down = false;
 	public static int speed = 32;
+	public boolean levelChosen = false;
 	
 	public void put(Level[][] maps){
 		LEVELS = maps;
@@ -23,7 +31,18 @@ public class World {
 	}
 	
 	public void update(){
-		move();
+		if(RPWorld.state == State.WORLD){
+			move();
+			for(int x = 0; x < LEVELS.length; x++){
+				for(int y = 0; y < LEVELS[x].length; y++){
+					if(getLevelBox(x, y).intersects(Inputhandler.mouse) && !RPWorld.worldPaused){
+						LEVELS[x][y].HOVER = true;
+					}else{
+						LEVELS[x][y].HOVER = false;
+					}
+				}
+			}
+		}
 	}
 	
 	public void move(){
@@ -43,5 +62,34 @@ public class World {
 		Level l = LEVELS[x][y];
 		Rectangle box = new Rectangle(X + (x * (mapSize + mapBorder)), Y + (y * (mapSize + mapBorder)), mapSize, mapSize);
 		return box;
+	}
+	
+	public void setActiveLevel() {
+		for(int x = 0; x < LEVELS.length; x++){
+			for(int y = 0; y < LEVELS[x].length; y++){
+				if(LEVELS[x][y].HOVER){
+					activeLevelX = x;
+					activeLevelY = y;
+					levelChosen = true;
+				}
+			}
+		}
+	}
+	
+	public Level getLevel(){
+		return LEVELS[activeLevelX][activeLevelY];
+	}
+	
+	public boolean hasHover(){
+		boolean temp = false;
+		for(int x = 0; x < LEVELS.length; x++){
+			for(int y = 0; y < LEVELS[x].length; y++){
+				if(LEVELS[x][y].HOVER){
+					temp = true;
+					break;
+				}
+			}
+		}
+		return temp;
 	}
 }

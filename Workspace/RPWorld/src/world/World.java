@@ -22,6 +22,8 @@ public class World {
 	public boolean down = false;
 	public static int speed = 32;
 	public boolean levelChosen = false;
+	public static int tileSize = 32;
+	public static int tileBorder = 0;
 	
 	public void put(Level[][] maps){
 		LEVELS = maps;
@@ -91,5 +93,13 @@ public class World {
 			}
 		}
 		return temp;
+	}
+	
+	public int getTileX(int x){
+		return getLevel().X + ((tileSize + tileBorder) * x);
+	}
+	
+	public int getTileY(int y){
+		return getLevel().Y + ((tileSize + tileBorder) * y);
 	}
 }

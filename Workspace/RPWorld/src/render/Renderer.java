@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import ui.*;
+import world.Level;
+import world.Tile;
 import world.World;
 import world.Worldhandler;
 
@@ -123,5 +125,17 @@ public abstract class Renderer {
     			drawString(m.get(i).TEXT, x, y - (i * (style.font.getCapHeight() + 3)) - style.font.getCapHeight(), style, 0.5f);
     		}
     	}
+    }
+    
+    public void drawLevel(Level l){
+    	for(int x = 0; x < l.TILES.length; x++){
+    		for(int y = 0; y < l.TILES[x].length; y++){
+    			drawTile(l.TILES[x][y], Worldhandler.getWorld().getTileX(x), Worldhandler.getWorld().getTileY(y), Worldhandler.getWorld().tileSize);
+    		}
+    	}
+    }
+    
+    public void drawTile(Tile t, int x, int y, int s){
+    	drawImage(Assethandler.getTileSprite(Worldhandler.getLevel().TILESET, t.TYPE), x, y, s, s, 0, false, Color.WHITE, 1.0f, false);
     }
 }

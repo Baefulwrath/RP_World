@@ -108,6 +108,9 @@ public class Inputhandler implements InputProcessor{
 					case DOWN:
 						Worldhandler.getWorld().up = false;
 						break;
+					case ENTER:
+						RPWorld.changeState(SHAREDMAP);
+						break;
 				}
 				break;
 		}
@@ -151,9 +154,7 @@ public class Inputhandler implements InputProcessor{
 				}else{
 					switch(button){
 						case Input.Buttons.LEFT:
-							if(Worldhandler.getWorld().levelChosen && Worldhandler.getWorld().hasHover()){
-								RPWorld.changeState(SHAREDMAP);
-							}else if(Worldhandler.getWorld().hasHover()){
+							if(Worldhandler.getWorld().hasHover()){
 								Worldhandler.setActiveLevel();
 							}
 							break;
